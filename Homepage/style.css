@@ -1,19 +1,21 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: "Playfair Display", sans-serif;
 }
 
-.navbar-brand img{
+.navbar-brand img {
     width: auto;
     height: 80px;
 }
 
-.navbar, .navbar-expand-lg, .bg-body-tertiary{
+.navbar,
+.navbar-expand-lg,
+.bg-body-tertiary {
     font-size: 2rem;
     padding: 0;
     background-color: rgb(241, 112, 98) !important;
@@ -21,39 +23,63 @@ body{
     border-bottom-color: black;
 }
 
-.btn, .btn-outline-success{
+.btn,
+.btn-outline-success {
     color: black;
     border-color: black;
 }
 
-.btn:hover, .btn-outline-success:hover{
+.btn:hover,
+.btn-outline-success:hover {
     border-color: black;
     background-color: black;
 }
 
-.intro{
+.intro {
     margin-top: 60px;
 }
 
-.intro h3,p{
-    padding: 5px 0;
-}
-
-.intro h3{
+.intro h3 {
     font-size: 2em;
 }
 
-.intro p{
+.intro p {
     font-size: 1.2em;
 }
 
-h5{
+h5 {
     font-size: 1.4em;
     margin-top: 30px;
 }
 
-.no-result{
+.no-result {
     margin-top: 100px;
     text-align: center;
     font-size: 4em;
+}
+
+.card-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 5px;
+    background-color: rgb(241, 112, 98);
+    color: white;
+    font-size: 0.9em;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.flex-link p{
+    padding-top: 12px;
+}
+
+.card-link:hover {
+    background-color: rgb(196, 91, 80);
+}
+
+.flex-link{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    align-items: center;
 }

@@ -1,0 +1,48 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Playfair Display", sans-serif;
+}
+
+.navbar-brand img{
+    width: auto;
+    height: 80px;
+}
+
+.navbar, .navbar-expand-lg, .bg-body-tertiary{
+    font-size: 2rem;
+    padding: 0;
+    background-color: rgb(241, 112, 98) !important;
+    border-bottom-style: groove;
+    border-bottom-color: black;
+}
+
+.btn, .btn-outline-success{
+    color: black;
+    border-color: black;
+}
+
+.btn:hover, .btn-outline-success:hover{
+    border-color: black;
+    background-color: black;
+}
+
+.intro{
+    margin-top: 60px;
+}
+
+.intro h3,p{
+    padding: 5px 0;
+}
+
+.intro h3{
+    font-size: 2rem;
+}
+
+.intro p{
+    font-size: 1.2rem;
+}

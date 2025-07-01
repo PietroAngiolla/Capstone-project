@@ -1,30 +1,4 @@
-const concerts = [
-    {
-        Artista: "Massimo Di Cataldo",
-        Data: "21 Luglio",
-        Luogo: "Peschici",
-        Prezzo: "Gratis"
-    },
-    {
-        Artista: "Rocco Hunt",
-        Data: "26 Luglio",
-        Luogo: "Peschici",
-        Prezzo: "40,25€",
-        href: "https://www.ticketone.it/event/rocco-hunt-rocco-hunt-p-arenile-del-porto-20114457/"
-    },
-    {
-        Artista: "Danilo Sacco",
-        Data: "28 Luglio",
-        Luogo: "Roseto Valforte",
-        Prezzo: "Gratis"
-    },
-    {
-        Artista: "Stewart Copeland",
-        Data: "29 Luglio",
-        Luogo: "Foggia",
-        Prezzo: "Da 28,75€",
-        href: "https://www.ticketone.it/event/stewart-copeland-piazza-cavour-20163349/"
-    },
+const concerts=[    
     {
         Artista: "The Kolors",
         Data: "1 Agosto",
@@ -124,12 +98,6 @@ const concerts = [
         Artista: "Alex Britti",
         Data: "26 Agosto",
         Luogo: "Vico Del Gargano",
-        Prezzo: "Gratis"
-    },
-    {
-        Artista: "Raphael Gualazzi",
-        Data: "6 Settembre",
-        Luogo: "Peschici",
         Prezzo: "Gratis"
     }
 ]

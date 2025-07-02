@@ -274,7 +274,7 @@ if (concerto) {
                 <h5>Informazioni concerto</h5> 
                 <p><span class="material-symbols-outlined">event</span> ${concerto.Data}</p>
                 <p><span class="material-symbols-outlined">schedule</span> ${concerto.Ora}</p>
-                <p><span class="material-symbols-outlined">location_on</span> ${concerto.Indirizzo}</p>
+                <p><span class="material-symbols-outlined">location_on</span> ${concerto.Luogo}, ${concerto.Indirizzo}</p>
                 <p>Prezzo: ${concerto.Prezzo}</p>
             </div>
             `

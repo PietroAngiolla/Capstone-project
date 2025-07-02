@@ -1,0 +1,16 @@
+.presentation-container{
+    text-align: center;
+    margin-top: 45px;
+    padding: 0 5px;
+}
+
+.presentation-container h3{
+    font-size: 3em;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.presentation-container p{
+    font-size: 1.3em;
+    font-weight: 300;
+}

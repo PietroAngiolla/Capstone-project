@@ -3,27 +3,31 @@ const concerts = [
         Artista: "Massimo Di Cataldo",
         Data: "21 Luglio",
         Luogo: "Peschici",
-        Prezzo: "Gratis"
+        Prezzo: "Gratis",
+        id: 1
     },
     {
         Artista: "Rocco Hunt",
         Data: "26 Luglio",
         Luogo: "Peschici",
         Prezzo: "40,25€",
-        href: "https://www.ticketone.it/event/rocco-hunt-rocco-hunt-p-arenile-del-porto-20114457/"
+        href: "https://www.ticketone.it/event/rocco-hunt-rocco-hunt-p-arenile-del-porto-20114457/",
+        id: 2
     },
     {
         Artista: "Danilo Sacco",
         Data: "28 Luglio",
         Luogo: "Roseto Valforte",
-        Prezzo: "Gratis"
+        Prezzo: "Gratis",
+        id: 3
     },
     {
         Artista: "Stewart Copeland",
         Data: "29 Luglio",
         Luogo: "Foggia",
         Prezzo: "Da 28,75€",
-        href: "https://www.ticketone.it/event/stewart-copeland-piazza-cavour-20163349/"
+        href: "https://www.ticketone.it/event/stewart-copeland-piazza-cavour-20163349/",
+        id: 4
     }
 ]
 
@@ -37,7 +41,7 @@ function showConcerts(list) {
                 <h5 class="card-title">${concerto.Artista}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
-                <a href="#" class="card-link">info concerto</a>
+                <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
                 <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.Prezzo}</a>
             `
         }else{
@@ -46,7 +50,7 @@ function showConcerts(list) {
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
                 <div class="flex-link">
-                    <a href="#" class="card-link">info concerto</a>
+                    <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
                     <p>Prezzo: ${concerto.Prezzo}</p>
                 </div>
             `

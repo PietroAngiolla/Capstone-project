@@ -34,7 +34,7 @@ const concerts = [
 function showConcerts(list) {
     const row = document.querySelector(".row")
     list.forEach(concerto => {
-        const card = document.createElement("div") 
+        const card = document.createElement("div")  
         card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3")
         if (concerto.Prezzo!=="Gratis"){
              card.innerHTML = `

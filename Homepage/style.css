@@ -83,3 +83,10 @@ h5 {
     gap: 7px;
     align-items: center;
 }
+
+@media (width <= 768px) {
+    .flex-link{
+        flex-direction: column;
+        align-items: baseline;
+    }
+}

@@ -158,7 +158,7 @@ function search(event) {
     const query = document.querySelector(".form-control").value.toLowerCase();
         const filtered = concerts.filter(concerto =>
             concerto.Artista.toLowerCase().includes(query) ||
-            concerto.Luogo.toLowerCase().includes(query) 
+            concerto.Luogo.toLowerCase().includes(query)  
         );
         if (filtered.length===0){
             const warningDiv=document.createElement("div")

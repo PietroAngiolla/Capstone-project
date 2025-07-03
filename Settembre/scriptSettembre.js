@@ -16,7 +16,7 @@ function showConcerts(list) {
         if (concerto.Prezzo!=="Gratis"){
              card.innerHTML = `
                 <h5 class="card-title">${concerto.Artista}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6> 
+                <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>  
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
                 <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
                 <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.Prezzo}</a>

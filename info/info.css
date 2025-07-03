@@ -54,3 +54,14 @@
     text-align: center;
     font-size: 4em;
 }
+
+@media (width <= 768px){
+    .main-container{
+        flex-direction: column;
+    }
+
+    .main-container img{
+        width: 100%;
+        height: auto;
+    }
+}

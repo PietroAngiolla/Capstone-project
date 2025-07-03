@@ -258,7 +258,7 @@ if (concerto) {
     if (concerto.Prezzo!=="Gratis"){
         infoDiv.innerHTML=`
             <img src="${concerto.img_src}" alt="${concerto.Artista} photo">
-            <div class="info-container">
+            <div class="info-container"> 
                 <h5>Informazioni concerto</h5>
                 <p><span class="material-symbols-outlined">event</span> ${concerto.Data}</p>
                 <p><span class="material-symbols-outlined">schedule</span> ${concerto.Ora}</p>

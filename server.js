@@ -32,15 +32,15 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Homepage', 'index.html'));
 });
 
-app.get('/', (req, res) => {
+app.get('/agosto', (req, res) => {
   res.sendFile(path.join(__dirname, 'Agosto', 'indexAgosto.html'));
 });
 
-app.get('/', (req, res) => {
+app.get('/luglio', (req, res) => {
   res.sendFile(path.join(__dirname, 'Luglio', 'indexLuglio.html'));
 });
 
-app.get('/', (req, res) => {
+app.get('/settembre', (req, res) => {
   res.sendFile(path.join(__dirname, 'Settembre', 'indexSettembre.html'));
 });
 

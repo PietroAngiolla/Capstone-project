@@ -23,10 +23,25 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, 'Homepage')));
+app.use(express.static(path.join(__dirname, 'Agosto')));
+app.use(express.static(path.join(__dirname, 'Luglio')));
+app.use(express.static(path.join(__dirname, 'Settembre')));
 
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Homepage', 'index.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Agosto', 'indexAgosto.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Luglio', 'indexLuglio.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Settembre', 'indexSettembre.html'));
 });
 
 mongoose.connect(process.env.MONGO_URL, {})

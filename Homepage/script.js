@@ -270,6 +270,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       console.log('Token:', data.token);
       // Salva il token se ti serve, es. localStorage.setItem('token', data.token)
       // Chiudi modal o fai redirect
+      localStorage.setItem('token', data.token);
+
+      // ✅ Ricarica la pagina
+      window.location.reload();
     } else {
       alert('Errore login: ' + (data.error || 'Errore sconosciuto'));
     }

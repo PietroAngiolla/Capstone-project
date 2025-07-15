@@ -23,6 +23,10 @@ body {
     border-bottom-color: black;
 }
 
+.d-flex{
+    margin-right: 25px;
+}
+
 .btn,
 .btn-outline-success {
     color: black;
@@ -33,6 +37,7 @@ body {
 .btn-outline-success:hover {
     border-color: black;
     background-color: black;
+    color: white;
 }
 
 .intro {

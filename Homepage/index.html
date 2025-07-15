@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html"><img src="img/FoggiaVibes_logo_clean.png"  
+            <a class="navbar-brand" href="index.html"><img src="img/FoggiaVibes_logo_clean.png"
                     alt="FoggiaVibes Logo"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -41,9 +41,43 @@
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Cerca artista o città" aria-label="Search" />
+                    <input class="form-control me-2" type="search" placeholder="Cerca artista o città"
+                        aria-label="Search" />
                     <button class="btn btn-outline-success" onclick="search(event)" type="submit">Cerca</button>
                 </form>
+                <button class="btn" id="openLoginBtn">Accedi</button>
+                <button class="btn" id="openSignupBtn">Registrati</button>
+
+                <div id="loginModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeLogin">&times;</span>
+                        <h2>Login</h2>
+                        <form id="loginForm">
+                            <label for="emailLogin">Email</label>
+                            <input type="email" id="emailLogin" name="email" required />
+                            <label for="passwordLogin">Password</label>
+                            <input type="password" id="passwordLogin" name="password" required />
+                            <button type="submit">Accedi</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="signupModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeSignup">&times;</span>
+                        <h2>Registrati</h2>
+                        <form id="signupForm">
+                            <label for="nameSignup">Nome</label>
+                            <input type="text" id="nameSignup" name="name" required />
+                            <label for="emailSignup">Email</label>
+                            <input type="email" id="emailSignup" name="email" required />
+                            <label for="passwordSignup">Password</label>
+                            <input type="password" id="passwordSignup" name="password" required />
+                            <button type="submit">Registrati</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </nav>

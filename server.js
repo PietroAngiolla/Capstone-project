@@ -13,7 +13,7 @@ const app = express();
 
 // ✅ Configurazione CORS corretta
 app.use(cors({
-  origin: 'http://localhost:3000', // origine del tuo frontend (live server)
+  origin: 'https://foggiavibes.onrender.com', // origine del tuo frontend (live server)
   credentials: true,
 }));
 

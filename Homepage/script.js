@@ -247,7 +247,7 @@ window.onclick = function(event) {
   }
 }
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://foggiavibes.onrender.com';
 
 // Login form submit
 document.getElementById('loginForm').addEventListener('submit', async (e) => {

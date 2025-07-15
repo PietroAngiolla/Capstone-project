@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'Settembre')));
 app.use('/css', express.static(path.join(__dirname, 'Homepage')));
 app.use('/img', express.static(path.join(__dirname, 'Homepage', 'img')));
 app.use('/info', express.static(path.join(__dirname, 'info')));
+app.use('/css', express.static(path.join(__dirname, 'info')));
 
 
 app.get('/homepage', (req, res) => {

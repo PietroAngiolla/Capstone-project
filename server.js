@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'Homepage')));
 app.use(express.static(path.join(__dirname, 'Agosto')));
 app.use(express.static(path.join(__dirname, 'Luglio')));
 app.use(express.static(path.join(__dirname, 'Settembre')));
-
+app.use('/css', express.static(path.join(__dirname, 'Homepage')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Homepage', 'index.html'));

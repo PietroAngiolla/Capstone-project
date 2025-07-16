@@ -273,7 +273,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       localStorage.setItem('token', data.token);
 
       // ✅ Ricarica la pagina
-      window.location.href = 'Dashboard/dashboard.html';
+      window.location.href = '/dashboard';
     } else {
       alert('Errore login: ' + (data.error || 'Errore sconosciuto'));
     }

@@ -30,6 +30,8 @@ app.use('/css', express.static(path.join(__dirname, 'Homepage')));
 app.use('/img', express.static(path.join(__dirname, 'Homepage', 'img')));
 app.use('/info', express.static(path.join(__dirname, 'info')));
 app.use('/css', express.static(path.join(__dirname, 'info')));
+app.use(express.static(path.join(__dirname, 'Dashboard')));
+
 
 
 app.get('/homepage', (req, res) => {
@@ -47,6 +49,11 @@ app.get('/luglio', (req, res) => {
 app.get('/settembre', (req, res) => {
   res.sendFile(path.join(__dirname, 'Settembre', 'indexSettembre.html'));
 });
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Dashboard', 'dashboard.html'));
+});
+
 
 mongoose.connect(process.env.MONGO_URL, {})
 .then(() => {

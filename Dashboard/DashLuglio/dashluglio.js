@@ -221,3 +221,4 @@ document.getElementById('btn-logout').addEventListener('click', () => {
 // all'avvio della pagina
 showConcerts(concerts);
 markBookmarks();
+   

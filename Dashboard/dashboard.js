@@ -157,18 +157,11 @@ const concerts = [
 
 function showConcerts(list) {
     const row = document.querySelector(".row")
-    // Prendo i preferiti dal localStorage una volta sola
-    const preferiti = JSON.parse(localStorage.getItem('preferiti')) || [];
     list.forEach(concerto => {
         const card = document.createElement("div")
         card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3")
-         // Controllo se il concerto è già nei preferiti (basato su infoLink o id)
-        const relativeLink = `/info/info.html?id=${concerto.id}`;
-        const isPreferito = preferiti.some(p => p.infoLink === relativeLink);
 
-
-        // Costruisco innerHTML con la classe 'filled' se è preferito
-        let filledClass = isPreferito ? 'filled' : '';
+        // Il bookmark sarà aggiornato da markBookmarks()
         if (concerto.Prezzo !== "Gratis") {
             card.innerHTML = `
                 <h5 class="card-title">${concerto.Artista}</h5> 
@@ -196,14 +189,10 @@ function showConcerts(list) {
                 </div>
             `
         }
-
         row.appendChild(card)
     });
-     // Riazzera event listener sui nuovi bottoni (importante!)
     attachBookmarkListeners();
 }
-
-showConcerts(concerts)
 
 function search(event) {
     event.preventDefault()
@@ -226,39 +215,124 @@ function search(event) {
         row.appendChild(warningDiv)
     } else {
         showConcerts(filtered);
+        // Aggiorna i bookmark dopo filtro
+        markBookmarks();
     }
+}
 
+// --- INIZIO MODIFICHE PER BACKEND --- //
+
+function getToken() {
+  return localStorage.getItem('token'); // O da dove salvi il token JWT dopo il login
+}
+
+async function fetchPreferiti() {
+  const token = getToken();
+  if (!token) return [];
+
+  try {
+    const res = await fetch('https://foggiavibes.onrender.com/api/preferiti', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!res.ok) throw new Error('Errore fetch preferiti');
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+async function addPreferito(preferito) {
+  const token = getToken();
+  if (!token) return;
+
+  try {
+    const res = await fetch('https://foggiavibes.onrender.com/api/preferiti', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(preferito)
+    });
+    if (!res.ok) throw new Error('Errore aggiunta preferito');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function removePreferito(infoLink) {
+  const token = getToken();
+  if (!token) return;
+
+  try {
+    const res = await fetch('https://foggiavibes.onrender.com/api/preferiti', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ infoLink })
+    });
+    if (!res.ok) throw new Error('Errore rimozione preferito');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function markBookmarks() {
+  const preferiti = await fetchPreferiti();
+
+  document.querySelectorAll(".card-body").forEach(card => {
+    const aInfo = card.querySelector('.flex-link a.card-link:nth-child(1)');
+    const url = new URL(aInfo.href);
+    const infoLink = url.pathname + url.search;
+    const icon = card.querySelector('.bookmark-btn .material-symbols-outlined');
+
+    if (preferiti.some(p => p.infoLink === infoLink)) {
+      icon.classList.add('filled');
+    } else {
+      icon.classList.remove('filled');
+    }
+  });
 }
 
 function attachBookmarkListeners() {
-    document.querySelectorAll('.bookmark-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const icon = this.querySelector('.material-symbols-outlined');
-            icon.classList.toggle('filled');
-            const card = this.closest('.card-body');
+  document.querySelectorAll('.bookmark-btn').forEach(btn => {
+    btn.addEventListener('click', async function () {
+      const icon = this.querySelector('.material-symbols-outlined');
+      const card = this.closest('.card-body');
 
-            const artista = card.querySelector('.card-title').textContent;
-            const data = card.querySelector('.card-subtitle').textContent;
-            const luogo = card.querySelector('.card-text').textContent.replace('Luogo: ', '');
-            const prezzoElem = card.querySelector('.flex-link a.card-link:nth-child(2)') || card.querySelector('.flex-link p');
-            const prezzo = prezzoElem ? prezzoElem.textContent.replace('Prezzo: ', '') : '';
+      const artista = card.querySelector('.card-title').textContent;
+      const data = card.querySelector('.card-subtitle').textContent;
+      const luogo = card.querySelector('.card-text').textContent.replace('Luogo: ', '');
+      const prezzoElem = card.querySelector('.flex-link a.card-link:nth-child(2)') || card.querySelector('.flex-link p');
+      const prezzo = prezzoElem ? prezzoElem.textContent.replace('Prezzo: ', '') : '';
 
-            const aInfo = card.querySelector('.flex-link a.card-link:nth-child(1)');
-            const url = new URL(aInfo.href);
-            const infoLink = url.pathname + url.search;
+      const aInfo = card.querySelector('.flex-link a.card-link:nth-child(1)');
+      const url = new URL(aInfo.href);
+      const infoLink = url.pathname + url.search;
 
-            const concerto = { artista, data, luogo, prezzo, infoLink };
-            let preferiti = JSON.parse(localStorage.getItem('preferiti')) || [];
+      const concerto = { artista, data, luogo, prezzo, infoLink };
 
-            if (icon.classList.contains('filled')) {
-                if (!preferiti.some(p => p.infoLink === infoLink)) {
-                    preferiti.push(concerto);
-                }
-            } else {
-                preferiti = preferiti.filter(p => p.infoLink !== infoLink);
-            }
+      if (!getToken()) {
+        alert('Devi essere loggato per salvare i preferiti');
+        return;
+      }
 
-            localStorage.setItem('preferiti', JSON.stringify(preferiti));
-        });
+      if (icon.classList.contains('filled')) {
+        icon.classList.remove('filled');
+        await removePreferito(infoLink);
+      } else {
+        icon.classList.add('filled');
+        await addPreferito(concerto);
+      }
     });
+  });
 }
+
+// --- FINE MODIFICHE BACKEND --- //
+
+// all'avvio della pagina
+showConcerts(concerts);
+markBookmarks();

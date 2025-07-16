@@ -32,6 +32,10 @@ app.use('/info', express.static(path.join(__dirname, 'info')));
 app.use('/css', express.static(path.join(__dirname, 'info')));
 app.use(express.static(path.join(__dirname, 'Dashboard')));
 app.use('/css', express.static(path.join(__dirname, 'Dashboard')));
+app.use(express.static(path.join(__dirname, 'DashLuglio')));
+app.use(express.static(path.join(__dirname, 'DashAgosto')));
+app.use(express.static(path.join(__dirname, 'DashSettembre')));
+app.use(express.static(path.join(__dirname, 'Preferiti')));
 
 app.get('/homepage', (req, res) => {
   res.sendFile(path.join(__dirname, 'Homepage', 'index.html'));
@@ -54,19 +58,19 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/dashboard/preferiti', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Dashboard', 'Preferiti', 'preferiti.html'));
+  res.sendFile(path.join(__dirname, 'Preferiti', 'preferiti.html'));
 });
 
 app.get('/dashboard/luglio', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Dashboard', 'DashLuglio', 'dashluglio.html'));
+  res.sendFile(path.join(__dirname, 'DashLuglio', 'dashluglio.html'));
 });
 
 app.get('/dashboard/agosto', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Dashboard', 'DashAgosto', 'dashagosto.html'));
+  res.sendFile(path.join(__dirname, 'DashAgosto', 'dashagosto.html'));
 });
 
 app.get('/dashboard/settembre', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Dashboard', 'DashSettembre', 'dashsettembre.html'));
+  res.sendFile(path.join(__dirname, 'DashSettembre', 'dashsettembre.html'));
 });
 // Connessione MongoDB
 mongoose.connect(process.env.MONGO_URL, {})

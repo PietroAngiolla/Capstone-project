@@ -331,6 +331,15 @@ function attachBookmarkListeners() {
   });
 }
 
+document.getElementById('btn-logout').addEventListener('click', () => {
+  // Rimuovi il token JWT da localStorage
+  localStorage.removeItem('token');
+
+  // (opzionale) reindirizza alla pagina di login o homepage
+  window.location.href = '/homepage'; // cambia con la tua pagina di login
+});
+
+
 // --- FINE MODIFICHE BACKEND --- //
 
 // all'avvio della pagina

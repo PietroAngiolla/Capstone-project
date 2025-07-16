@@ -57,19 +57,19 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'Dashboard', 'dashboard.html'));
 });
 
-app.get('/dashboard/preferiti', (req, res) => {
+app.get('/preferiti', (req, res) => {
   res.sendFile(path.join(__dirname, 'Preferiti', 'preferiti.html'));
 });
 
-app.get('/dashboard/luglio', (req, res) => {
+app.get('/dashluglio', (req, res) => {
   res.sendFile(path.join(__dirname, 'DashLuglio', 'dashluglio.html'));
 });
 
-app.get('/dashboard/agosto', (req, res) => {
+app.get('/dashagosto', (req, res) => {
   res.sendFile(path.join(__dirname, 'DashAgosto', 'dashagosto.html'));
 });
 
-app.get('/dashboard/settembre', (req, res) => {
+app.get('/dashsettembre', (req, res) => {
   res.sendFile(path.join(__dirname, 'DashSettembre', 'dashsettembre.html'));
 });
 // Connessione MongoDB

@@ -163,7 +163,9 @@ function showConcerts(list) {
         const card = document.createElement("div")
         card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3")
          // Controllo se il concerto è già nei preferiti (basato su infoLink o id)
-        const isPreferito = preferiti.some(p => p.infoLink === `/info/info.html?id=${concerto.id}`);
+        const relativeLink = `/info/info.html?id=${concerto.id}`;
+        const isPreferito = preferiti.some(p => p.infoLink === relativeLink);
+
 
         // Costruisco innerHTML con la classe 'filled' se è preferito
         let filledClass = isPreferito ? 'filled' : '';
@@ -233,35 +235,29 @@ function attachBookmarkListeners() {
         btn.addEventListener('click', function () {
             const icon = this.querySelector('.material-symbols-outlined');
             icon.classList.toggle('filled');
-            // Prendo la card genitore
             const card = this.closest('.card-body');
 
-            // Estraggo dati dalla card (aggiustali secondo il tuo markup)
             const artista = card.querySelector('.card-title').textContent;
             const data = card.querySelector('.card-subtitle').textContent;
             const luogo = card.querySelector('.card-text').textContent.replace('Luogo: ', '');
             const prezzoElem = card.querySelector('.flex-link a.card-link:nth-child(2)') || card.querySelector('.flex-link p');
             const prezzo = prezzoElem ? prezzoElem.textContent.replace('Prezzo: ', '') : '';
-            const infoLink = card.querySelector('.flex-link a.card-link:nth-child(1)').href;
 
-            // Creo un oggetto concerto
+            const aInfo = card.querySelector('.flex-link a.card-link:nth-child(1)');
+            const url = new URL(aInfo.href);
+            const infoLink = url.pathname + url.search;
+
             const concerto = { artista, data, luogo, prezzo, infoLink };
-
-            // Prendo i preferiti da localStorage
             let preferiti = JSON.parse(localStorage.getItem('preferiti')) || [];
 
-            // Se la card è riempita, aggiungo; se è svuotata, rimuovo
             if (icon.classList.contains('filled')) {
-                // Aggiungo solo se non è già presente (evito duplicati)
-                if (!preferiti.some(p => p.infoLink === concerto.infoLink)) {
+                if (!preferiti.some(p => p.infoLink === infoLink)) {
                     preferiti.push(concerto);
                 }
             } else {
-                // Rimuovo dai preferiti se esiste
-                preferiti = preferiti.filter(p => p.infoLink !== concerto.infoLink);
+                preferiti = preferiti.filter(p => p.infoLink !== infoLink);
             }
 
-            // Salvo preferiti aggiornati
             localStorage.setItem('preferiti', JSON.stringify(preferiti));
         });
     });

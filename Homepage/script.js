@@ -303,6 +303,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     if (res.ok) {
       alert('Registrazione riuscita!');
       // Chiudi modal o fai altre azioni
+      window.location.href = '/dashboard';
     } else {
       alert('Errore registrazione: ' + (data.error || 'Errore sconosciuto'));
     }

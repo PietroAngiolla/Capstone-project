@@ -1,0 +1,13 @@
+.bookmark-btn{
+    border: none;
+    margin-top: 3px;
+}
+
+.material-symbols-outlined{
+    color: rgb(241, 112, 98);
+}
+
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1;
+  color: rgb(241, 112, 98);
+}

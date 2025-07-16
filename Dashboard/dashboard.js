@@ -157,11 +157,18 @@ const concerts = [
 
 function showConcerts(list) {
     const row = document.querySelector(".row")
+    // Prendo i preferiti dal localStorage una volta sola
+    const preferiti = JSON.parse(localStorage.getItem('preferiti')) || [];
     list.forEach(concerto => {
         const card = document.createElement("div")
         card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3")
-        if (concerto.Prezzo!=="Gratis"){
-             card.innerHTML = `
+         // Controllo se il concerto è già nei preferiti (basato su infoLink o id)
+        const isPreferito = preferiti.some(p => p.infoLink === `/info/info.html?id=${concerto.id}`);
+
+        // Costruisco innerHTML con la classe 'filled' se è preferito
+        let filledClass = isPreferito ? 'filled' : '';
+        if (concerto.Prezzo !== "Gratis") {
+            card.innerHTML = `
                 <h5 class="card-title">${concerto.Artista}</h5> 
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
@@ -169,9 +176,12 @@ function showConcerts(list) {
                     <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
                     <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.Prezzo}</a>
                 </div>
+                <div class="bookmark">
+                    <button class="bookmark-btn"><span class="material-symbols-outlined">bookmark</span></button>
+                </div>
             `
-        }else{
-             card.innerHTML = `
+        } else {
+            card.innerHTML = `
                 <h5 class="card-title">${concerto.Artista}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
@@ -179,135 +189,80 @@ function showConcerts(list) {
                     <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
                     <p>Prezzo: ${concerto.Prezzo}</p>
                 </div>
+                <div class="bookmark">
+                    <button class="bookmark-btn"><span class="material-symbols-outlined">bookmark</span></button>
+                </div>
             `
         }
-        
+
         row.appendChild(card)
     });
+     // Riazzera event listener sui nuovi bottoni (importante!)
+    attachBookmarkListeners();
 }
 
 showConcerts(concerts)
 
 function search(event) {
     event.preventDefault()
-    const concertsList=document.querySelectorAll(".card-body")
-    concertsList.forEach(concerto =>{
+    const concertsList = document.querySelectorAll(".card-body")
+    concertsList.forEach(concerto => {
         concerto.remove()
     })
     const query = document.querySelector(".form-control").value.toLowerCase();
-        const filtered = concerts.filter(concerto =>
-            concerto.Artista.toLowerCase().includes(query) ||
-            concerto.Luogo.toLowerCase().includes(query)
-        );
-        if (filtered.length===0){
-            const warningDiv=document.createElement("div")
-            warningDiv.classList.add("no-result")
-            warningDiv.innerHTML=`
-                <p>Siamo spiacenti, la ricerca non ha prodotto risultati</p>
-            `
-            const row=document.querySelector(".row")
-            row.appendChild(warningDiv)
-        }else{
-            showConcerts(filtered);
-        }
-        
-}
-
-// Login
-const loginModal = document.getElementById("loginModal");
-const openLoginBtn = document.getElementById("openLoginBtn");
-const closeLogin = document.getElementById("closeLogin");
-
-openLoginBtn.onclick = function() {
-  loginModal.style.display = "block";
-}
-closeLogin.onclick = function() {
-  loginModal.style.display = "none";
-}
-
-// Sign Up
-const signupModal = document.getElementById("signupModal");
-const openSignupBtn = document.getElementById("openSignupBtn");
-const closeSignup = document.getElementById("closeSignup");
-
-openSignupBtn.onclick = function() {
-  signupModal.style.display = "block";
-}
-closeSignup.onclick = function() {
-  signupModal.style.display = "none";
-}
-
-// Chiudere se clicchi fuori dal contenuto
-window.onclick = function(event) {
-  if (event.target == loginModal) {
-    loginModal.style.display = "none";
-  }
-  if (event.target == signupModal) {
-    signupModal.style.display = "none";
-  }
-}
-
-const BASE_URL = 'https://foggiavibes.onrender.com';
-
-// Login form submit
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const email = e.target.email.value;
-  const password = e.target.password.value;
-
-  try {
-    const res = await fetch(`${BASE_URL}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert('Login riuscito!');
-      console.log('Token:', data.token);
-      // Salva il token se ti serve, es. localStorage.setItem('token', data.token)
-      // Chiudi modal o fai redirect
-      localStorage.setItem('token', data.token);
-
-      // ✅ Ricarica la pagina
-      window.location.href = 'Dashboard/dashboard.html';
+    const filtered = concerts.filter(concerto =>
+        concerto.Artista.toLowerCase().includes(query) ||
+        concerto.Luogo.toLowerCase().includes(query)
+    );
+    if (filtered.length === 0) {
+        const warningDiv = document.createElement("div")
+        warningDiv.classList.add("no-result")
+        warningDiv.innerHTML = `
+            <p>Siamo spiacenti, la ricerca non ha prodotto risultati</p>
+        `
+        const row = document.querySelector(".row")
+        row.appendChild(warningDiv)
     } else {
-      alert('Errore login: ' + (data.error || 'Errore sconosciuto'));
+        showConcerts(filtered);
     }
-  } catch (err) {
-    alert('Errore di rete o server');
-    console.error(err);
-  }
-});
 
-// Signup form submit
-document.getElementById('signupForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+}
 
-  // Nota: se vuoi salvare il nome, aggiungi lato backend e qui in body
-  const email = e.target.email.value;
-  const password = e.target.password.value;
+function attachBookmarkListeners() {
+    document.querySelectorAll('.bookmark-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const icon = this.querySelector('.material-symbols-outlined');
+            icon.classList.toggle('filled');
+            // Prendo la card genitore
+            const card = this.closest('.card-body');
 
-  try {
-    const res = await fetch(`${BASE_URL}/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+            // Estraggo dati dalla card (aggiustali secondo il tuo markup)
+            const artista = card.querySelector('.card-title').textContent;
+            const data = card.querySelector('.card-subtitle').textContent;
+            const luogo = card.querySelector('.card-text').textContent.replace('Luogo: ', '');
+            const prezzoElem = card.querySelector('.flex-link a.card-link:nth-child(2)') || card.querySelector('.flex-link p');
+            const prezzo = prezzoElem ? prezzoElem.textContent.replace('Prezzo: ', '') : '';
+            const infoLink = card.querySelector('.flex-link a.card-link:nth-child(1)').href;
+
+            // Creo un oggetto concerto
+            const concerto = { artista, data, luogo, prezzo, infoLink };
+
+            // Prendo i preferiti da localStorage
+            let preferiti = JSON.parse(localStorage.getItem('preferiti')) || [];
+
+            // Se la card è riempita, aggiungo; se è svuotata, rimuovo
+            if (icon.classList.contains('filled')) {
+                // Aggiungo solo se non è già presente (evito duplicati)
+                if (!preferiti.some(p => p.infoLink === concerto.infoLink)) {
+                    preferiti.push(concerto);
+                }
+            } else {
+                // Rimuovo dai preferiti se esiste
+                preferiti = preferiti.filter(p => p.infoLink !== concerto.infoLink);
+            }
+
+            // Salvo preferiti aggiornati
+            localStorage.setItem('preferiti', JSON.stringify(preferiti));
+        });
     });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert('Registrazione riuscita!');
-      // Chiudi modal o fai altre azioni
-    } else {
-      alert('Errore registrazione: ' + (data.error || 'Errore sconosciuto'));
-    }
-  } catch (err) {
-    alert('Errore di rete o server');
-    console.error(err);
-  }
-});
+}

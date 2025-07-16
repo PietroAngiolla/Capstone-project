@@ -55,6 +55,10 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'Dashboard', 'dashboard.html'));
 });
 
+app.get('/dashboard/preferiti', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Dashboard', 'Preferiti', 'preferiti.html'));
+});
+
 
 mongoose.connect(process.env.MONGO_URL, {})
 .then(() => {

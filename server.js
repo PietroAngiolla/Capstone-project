@@ -31,6 +31,7 @@ app.use('/img', express.static(path.join(__dirname, 'Homepage', 'img')));
 app.use('/info', express.static(path.join(__dirname, 'info')));
 app.use('/css', express.static(path.join(__dirname, 'info')));
 app.use(express.static(path.join(__dirname, 'Dashboard')));
+app.use('/css', express.static(path.join(__dirname, 'Dashboard')));
 
 
 

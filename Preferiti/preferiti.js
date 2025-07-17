@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             
 
-            // Listener per rimuovere preferito
             const bookmarkBtn = card.querySelector(".bookmark-btn");
             bookmarkBtn.addEventListener("click", async () => {
                 const confirmed = confirm("Vuoi rimuovere questo concerto dai preferiti?");
@@ -71,10 +70,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     if (!res.ok) throw new Error("Errore nella rimozione del preferito");
 
-                    // Rimuovi la card dal DOM
                     card.remove();
 
-                    // Se non ci sono più preferiti visibili, mostra un messaggio
                     if (container.querySelectorAll(".card-body").length === 0) {
                         container.innerHTML = `<p>Non hai ancora aggiunto concerti ai preferiti.</p>`;
                     }
@@ -95,9 +92,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.getElementById('btn-logout').addEventListener('click', () => {
-  // Rimuovi il token JWT da localStorage
   localStorage.removeItem('token');
-
-  // (opzionale) reindirizza alla pagina di login o homepage
-  window.location.href = '/homepage'; // cambia con la tua pagina di login
+  window.location.href = '/homepage';
 });

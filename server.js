@@ -11,9 +11,8 @@ dotenv.config({ path: './db.env' });
 
 const app = express();
 
-// ✅ Configurazione CORS corretta
 app.use(cors({
-  origin: 'https://foggiavibes.onrender.com', // origine del tuo frontend (live server)
+  origin: 'https://foggiavibes.onrender.com',
   credentials: true,
 }));
 
@@ -77,23 +76,21 @@ app.get('/dashsettembre', (req, res) => {
 app.get('/dashinfo', (req, res) => {
   res.sendFile(path.join(__dirname, 'DashInfo', 'dashinfo.html'));
 });
-// Connessione MongoDB
+
 mongoose.connect(process.env.MONGO_URL, {})
 .then(() => {
-  console.log('✅ Connesso a MongoDB Atlas!');
+  console.log("Connesso a MongoDB")
 })
 .catch((err) => {
   console.error('❌ Errore connessione MongoDB:', err);
 });
 
-// USER SCHEMA
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
 const User = mongoose.model('User', userSchema);
 
-// PREFERITO SCHEMA
 const preferitoSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   artista: String,
@@ -104,7 +101,6 @@ const preferitoSchema = new mongoose.Schema({
 });
 const Preferito = mongoose.model('Preferito', preferitoSchema);
 
-// Middleware autenticazione JWT
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) return res.status(401).json({ error: 'Token mancante' });
@@ -119,7 +115,6 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// SIGNUP
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
 
@@ -134,7 +129,6 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-// LOGIN
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -156,7 +150,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// PROTECTED ROUTE DI ESEMPIO
 app.get('/protected', (req, res) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.status(401).json({ error: 'Token mancante' });
@@ -170,9 +163,7 @@ app.get('/protected', (req, res) => {
   }
 });
 
-// ROTTE PER PREFERITI
 
-// Recupera tutti i preferiti dell'utente
 app.get('/api/preferiti', authenticateToken, async (req, res) => {
   try {
     const preferiti = await Preferito.find({ userId: req.user.id });
@@ -182,7 +173,6 @@ app.get('/api/preferiti', authenticateToken, async (req, res) => {
   }
 });
 
-// Aggiungi un preferito
 app.post('/api/preferiti', authenticateToken, async (req, res) => {
   const { artista, data, luogo, prezzo, infoLink } = req.body;
   try {
@@ -205,7 +195,6 @@ app.post('/api/preferiti', authenticateToken, async (req, res) => {
   }
 });
 
-// Rimuovi un preferito
 app.delete('/api/preferiti', authenticateToken, async (req, res) => {
   const { infoLink } = req.body;
   try {
@@ -216,7 +205,6 @@ app.delete('/api/preferiti', authenticateToken, async (req, res) => {
   }
 });
 
-// START SERVER
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server avviato su http://localhost:${PORT}`);

@@ -36,8 +36,6 @@ function showConcerts(list) {
     list.forEach(concerto => {
         const card = document.createElement("div")
         card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3")
-
-        // Il bookmark sarà aggiornato da markBookmarks()
         if (concerto.Prezzo !== "Gratis") {
             card.innerHTML = `
                 <h5 class="card-title">${concerto.Artista}</h5> 
@@ -94,15 +92,12 @@ function search(event) {
         row.appendChild(warningDiv)
     } else {
         showConcerts(filtered);
-        // Aggiorna i bookmark dopo filtro
         markBookmarks();
     }
 }
 
-// --- INIZIO MODIFICHE PER BACKEND --- //
-
 function getToken() {
-  return localStorage.getItem('token'); // O da dove salvi il token JWT dopo il login
+  return localStorage.getItem('token');
 }
 
 async function fetchPreferiti() {
@@ -211,17 +206,10 @@ function attachBookmarkListeners() {
 }
 
 document.getElementById('btn-logout').addEventListener('click', () => {
-  // Rimuovi il token JWT da localStorage
   localStorage.removeItem('token');
-
-  // (opzionale) reindirizza alla pagina di login o homepage
-  window.location.href = '/homepage'; // cambia con la tua pagina di login
+  window.location.href = '/homepage';
 });
 
-
-// --- FINE MODIFICHE BACKEND --- //
-
-// all'avvio della pagina
 showConcerts(concerts);
 markBookmarks();
    

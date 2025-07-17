@@ -67,7 +67,6 @@ function search(event) {
         
 }
 
-// Login
 const loginModal = document.getElementById("loginModal");
 const openLoginBtn = document.getElementById("openLoginBtn");
 const closeLogin = document.getElementById("closeLogin");
@@ -79,7 +78,6 @@ closeLogin.onclick = function() {
   loginModal.style.display = "none";
 }
 
-// Sign Up
 const signupModal = document.getElementById("signupModal");
 const openSignupBtn = document.getElementById("openSignupBtn");
 const closeSignup = document.getElementById("closeSignup");
@@ -91,7 +89,6 @@ closeSignup.onclick = function() {
   signupModal.style.display = "none";
 }
 
-// Chiudere se clicchi fuori dal contenuto
 window.onclick = function(event) {
   if (event.target == loginModal) {
     loginModal.style.display = "none";
@@ -103,7 +100,6 @@ window.onclick = function(event) {
 
 const BASE_URL = 'https://foggiavibes.onrender.com';
 
-// Login form submit
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -121,12 +117,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     if (res.ok) {
       alert('Login riuscito!');
-      console.log('Token:', data.token);
-      // Salva il token se ti serve, es. localStorage.setItem('token', data.token)
-      // Chiudi modal o fai redirect
       localStorage.setItem('token', data.token);
-
-      // ✅ Ricarica la pagina
       window.location.href = '/dashboard';
     } else {
       alert('Errore login: ' + (data.error || 'Errore sconosciuto'));
@@ -137,11 +128,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Signup form submit
 document.getElementById('signupForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-
-  // Nota: se vuoi salvare il nome, aggiungi lato backend e qui in body
   const email = e.target.email.value;
   const password = e.target.password.value;
 
@@ -156,7 +144,6 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
 
     if (res.ok) {
       alert('Registrazione riuscita!');
-      // Chiudi modal o fai altre azioni
       window.location.href = '/dashboard';
     } else {
       alert('Errore registrazione: ' + (data.error || 'Errore sconosciuto'));

@@ -1,5 +1,5 @@
 function renderSavedCards() {
-  const container = document.querySelector('saved-cards');
+  const container = document.querySelector('.saved-cards');
   container.innerHTML = '';
   const savedCards = JSON.parse(localStorage.getItem('savedCards')) || [];
 

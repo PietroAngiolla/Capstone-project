@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'DashLuglio')));
 app.use(express.static(path.join(__dirname, 'DashAgosto')));
 app.use(express.static(path.join(__dirname, 'DashSettembre')));
 app.use(express.static(path.join(__dirname, 'Preferiti')));
+app.use(express.static(path.join(__dirname, 'DashInfo')));
 
 app.get('/homepage', (req, res) => {
   res.sendFile(path.join(__dirname, 'Homepage', 'index.html'));
@@ -71,6 +72,10 @@ app.get('/dashagosto', (req, res) => {
 
 app.get('/dashsettembre', (req, res) => {
   res.sendFile(path.join(__dirname, 'DashSettembre', 'dashsettembre.html'));
+});
+
+app.get('/dashinfo', (req, res) => {
+  res.sendFile(path.join(__dirname, 'DashInfo', 'dashinfo.html'));
 });
 // Connessione MongoDB
 mongoose.connect(process.env.MONGO_URL, {})

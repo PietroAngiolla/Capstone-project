@@ -44,7 +44,7 @@ function showConcerts(list) {
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
                 <div class="flex-link">
-                    <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
+                    <a href="/dashinfo?id=${concerto.id}" class="card-link">info concerto</a>
                     <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.Prezzo}</a>
                 </div>
                 <div class="bookmark">
@@ -57,7 +57,7 @@ function showConcerts(list) {
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.Data}</h6>
                 <p class="card-text">Luogo: ${concerto.Luogo}</p>
                 <div class="flex-link">
-                    <a href="/info/info.html?id=${concerto.id}" class="card-link">info concerto</a>
+                    <a href="/dashinfo?id=${concerto.id}" class="card-link">info concerto</a>
                     <p>Prezzo: ${concerto.Prezzo}</p>
                 </div>
                 <div class="bookmark">

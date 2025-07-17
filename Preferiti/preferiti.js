@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         preferiti.forEach(concerto => {
             const card = document.createElement("div");
             card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3");
-
-            card.innerHTML = `
+            if(concerto.prezzo==="Gratis"){
+              card.innerHTML = `
                 <h5 class="card-title">${concerto.artista}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.data}</h6>
                 <p class="card-text">Luogo: ${concerto.luogo}</p>
@@ -37,6 +37,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <button class="bookmark-btn"><span class="material-symbols-outlined filled">bookmark</span></button>
                 </div>
             `;
+            }else{
+              card.innerHTML = `
+                <h5 class="card-title">${concerto.artista}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.data}</h6>
+                <p class="card-text">Luogo: ${concerto.luogo}</p>
+                <div class="flex-link">
+                    <a href="${concerto.infoLink}" class="card-link">info concerto</a>
+                    <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.Prezzo}</a>
+                </div>
+                <div class="bookmark">
+                    <button class="bookmark-btn"><span class="material-symbols-outlined filled">bookmark</span></button>
+                </div>
+            `;
+            }
+            
 
             // Listener per rimuovere preferito
             const bookmarkBtn = card.querySelector(".bookmark-btn");

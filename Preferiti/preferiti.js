@@ -1,24 +1,44 @@
-function showPreferiti() {
-  const preferiti = JSON.parse(localStorage.getItem('preferiti')) || [];
-  const div= document.querySelector('.saved-cards');
-  div.innerHTML = ''; // pulisco prima
+function renderSavedCards() {
+      const container = document.getElementById('saved-cards');
+      container.innerHTML = '';
+      const savedCards = JSON.parse(localStorage.getItem('savedCards')) || [];
 
-  preferiti.forEach(concerto => {
-    const card = document.createElement('div');
-    card.classList.add('card-body', 'col-6', 'col-md-4', 'col-lg-3');
-    card.innerHTML = `
-      <h5 class="card-title">${concerto.artista}</h5> 
-      <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.data}</h6>
-      <p class="card-text">Luogo: ${concerto.luogo}</p>
-      <div class="flex-link">
-        <a href="${concerto.infoLink}" class="card-link">info concerto</a>
-        <p>Prezzo: ${concerto.prezzo}</p>
-      </div>
-    `;
-    div.appendChild(card);
-  });
+      savedCards.forEach(item => {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = item.html;
+
+        // Rimuovi eventuali vecchi bottoni bookmark clonati
+        const btn = wrapper.querySelector('.bookmark-btn');
+        if (btn) btn.remove();
+
+        // Aggiungi pulsante per rimuovere
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-btn');
+        removeBtn.textContent = 'Rimuovi dai preferiti';
+        removeBtn.addEventListener('click', function () {
+          removeCard(item.id);
+        });
+
+        wrapper.appendChild(removeBtn);
+        container.appendChild(wrapper);
+      });
+    }
+
+    function removeCard(cardId) {
+      let savedCards = JSON.parse(localStorage.getItem('savedCards')) || [];
+      savedCards = savedCards.filter(item => item.id !== cardId);
+      localStorage.setItem('savedCards', JSON.stringify(savedCards));
+
+      // Aggiorna lista
+      renderSavedCards();
+
+      // Notifica anche la pagina principale (triggera evento "storage")
+      localStorage.setItem('lastUpdate', new Date().getTime());
 }
 
-// Al caricamento della pagina
-window.addEventListener('DOMContentLoaded', showPreferiti);
+    // Ricarica cards quando cambia lo storage
+    window.addEventListener('storage', function () {
+      renderSavedCards();
+    });
 
+    renderSavedCards();

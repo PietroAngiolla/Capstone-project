@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <p class="card-text">Luogo: ${concerto.luogo}</p>
                 <div class="flex-link">
                     <a href="${concerto.infoLink}" class="card-link">info concerto</a>
-                    <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.Prezzo}</a>
+                    <a href="${concerto.href}" class="card-link">Prezzo: ${concerto.prezzo}</a>
                 </div>
                 <div class="bookmark">
                     <button class="bookmark-btn"><span class="material-symbols-outlined filled">bookmark</span></button>
@@ -92,4 +92,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error(err);
         container.innerHTML = `<p>Errore nel caricamento dei preferiti.</p>`;
     }
+});
+
+document.getElementById('btn-logout').addEventListener('click', () => {
+  // Rimuovi il token JWT da localStorage
+  localStorage.removeItem('token');
+
+  // (opzionale) reindirizza alla pagina di login o homepage
+  window.location.href = '/homepage'; // cambia con la tua pagina di login
 });

@@ -59,6 +59,9 @@ function search(event) {
         concerto.Luogo.toLowerCase().includes(query)
     );
     if (filtered.length === 0) {
+      if(document.querySelector(".no-result")){
+            document.querySelector(".no-result").remove();
+        }
         const warningDiv = document.createElement("div")
         warningDiv.classList.add("no-result")
         warningDiv.innerHTML = `

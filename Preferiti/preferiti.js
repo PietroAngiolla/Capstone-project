@@ -1,44 +1,46 @@
-function renderSavedCards() {
-  const container = document.querySelector('.saved-cards');
-  container.innerHTML = '';
-  const savedCards = JSON.parse(localStorage.getItem('savedCards')) || [];
+document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.querySelector(".saved-cards");
 
-  savedCards.forEach(item => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = item.html;
+    const token = localStorage.getItem("token");
+    if (!token) {
+        container.innerHTML = `<p>Devi essere loggato per vedere i preferiti.</p>`;
+        return;
+    }
 
-    // Rimuovi eventuali vecchi bottoni bookmark clonati
-    const btn = wrapper.querySelector('.bookmark-btn');
-    if (btn) btn.remove();
+    try {
+        const res = await fetch("https://foggiavibes.onrender.com/api/preferiti", {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
 
-    // Aggiungi pulsante per rimuovere
-    const removeBtn = document.createElement('button');
-    removeBtn.classList.add('remove-btn');
-    removeBtn.textContent = 'Rimuovi dai preferiti';
-    removeBtn.addEventListener('click', function () {
-      removeCard(item.id);
-    });
+        if (!res.ok) throw new Error("Errore nel recupero dei preferiti");
 
-    wrapper.appendChild(removeBtn);
-    container.appendChild(wrapper);
-  });
-}
+        const preferiti = await res.json();
 
-function removeCard(cardId) {
-  let savedCards = JSON.parse(localStorage.getItem('savedCards')) || [];
-  savedCards = savedCards.filter(item => item.id !== cardId);
-  localStorage.setItem('savedCards', JSON.stringify(savedCards));
+        if (preferiti.length === 0) {
+            container.innerHTML = `<p>Non hai ancora aggiunto concerti ai preferiti.</p>`;
+            return;
+        }
 
-  // Aggiorna lista
-  renderSavedCards();
+        preferiti.forEach(concerto => {
+            const card = document.createElement("div");
+            card.classList.add("card-body", "col-6", "col-md-4", "col-lg-3");
 
-  // Notifica anche la pagina principale (triggera evento "storage")
-  localStorage.setItem('lastUpdate', new Date().getTime());
-}
-
-// Ricarica cards quando cambia lo storage
-window.addEventListener('storage', function () {
-  renderSavedCards();
+            card.innerHTML = `
+                <h5 class="card-title">${concerto.artista}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">${concerto.data}</h6>
+                <p class="card-text">Luogo: ${concerto.luogo}</p>
+                <div class="flex-link">
+                    <a href="${concerto.infoLink}" class="card-link">info concerto</a>
+                    <p>Prezzo: ${concerto.prezzo}</p>
+                </div>
+                <div class="bookmark">
+                    <button class="bookmark-btn"><span class="material-symbols-outlined filled">bookmark</span></button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p>Errore nel caricamento dei preferiti.</p>`;
+    }
 });
-
-renderSavedCards();
